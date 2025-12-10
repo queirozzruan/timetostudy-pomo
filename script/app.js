@@ -21,8 +21,6 @@ function updateTimerDisplay() {
 }
 
 function startTimer() {
-  // Para nao rodar 2 timers
-  if (timerInterval !== null) return;
   isRunning = true;
   // Criacao do loop infinito que roda a cada 1s
   timerInterval = setInterval(() => {
@@ -39,7 +37,21 @@ function startTimer() {
   }, 1000); //1s
 }
 // Quando clicar no botao, starta a funcao.
-startButton.addEventListener("click", startTimer);
+startButton.addEventListener("click", () => {
+  if (isRunning) {
+    pauseTimer();
+    startButton.textContent = "INICIAR";
+  } else {
+    startTimer();
+    startButton.textContent = "PAUSAR";
+  }
+});
 
 // Chamada da funcao
 updateTimerDisplay();
+
+function pauseTimer() {
+  clearInterval(timerInterval);
+  timerInterval = null;
+  isRunning = false;
+}
