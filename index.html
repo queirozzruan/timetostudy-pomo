@@ -1,37 +1,125 @@
 <!DOCTYPE html>
-<html lang="en">
+<html class="light" lang="pt-br">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="https://cdn.tailwindcss.com"> C</script>
-  <title>timetostudypomo</title>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>timetostudy</title>
+  <link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="%2318181b"/><path fill="%23dcff00" d="M15 1H9v2h6V1zm-4 13h2V8h-2v6zm8.03-6.61l1.42-1.42c-.43-.51-.9-.99-1.41-1.41l-1.42 1.42C16.07 4.74 14.12 4 12 4c-4.97 0-9 4.03-9 9s4.02 9 9 9 9-4.03 9-9c0-2.12-.74-4.07-1.97-5.61zM12 20c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"/></svg>'>
+  <link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#dcff00",
+            //light mode
+            "background-light": "#ffffff",
+            "surface-light": "#ffffff",
+            "text-light": "#09090b",
+            "subtle-light": "#71717a",
+            //dark mode
+            "background-dark": "#18181b",
+            "surface-dark": "#27272a",
+            "text-dark": "#fafafa",
+            "subtle-dark": "#a1a1aa",
+          },
+          fontFamily: {
+            "display": ["Spline Sans", "sans-serif"]
+          },
+          borderRadius: { "DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px" },
+        },
+      },
+    }
+  </script>
+  <style>
+  </style>
 </head>
 
-<body>
-
-  <main>
-    <div>
-      <div>
-        <button>Pomodoro</button>
-        <button>Break</button>
-        <button>Long Break</button>
+<body class="bg-background-light dark:bg-background-dark font-display text-text-light dark:text-text-dark transition-colors duration-200">
+  <div class="relative flex min-h-screen w-full flex-col overflow-x-hidden">
+    <header class="sticky top-0 z-50 flex items-center justify-between border-b border-gray-200 dark:border-white/10 bg-white/80 dark:bg-background-dark/80 backdrop-blur-md px-6 py-4 md:px-10">
+      <div class="flex items-center gap-4 text-text-light dark:text-text-dark">
+        <div class="size-6 text-primary dark:text-primary">
+          <span class="material-symbols-outlined !text-[24px]">timer</span>
+        </div>
+        <h2 class="text-xl font-bold leading-tight tracking-[-0.015em]">timetostudy</h2>
       </div>
-      <div>
-        <h1 id="timer-display">00:00</h1>
+      <div class="flex items-center gap-4">
+        <div id="datetime-display" class="hidden md:flex items-center h-10 px-4 rounded-full bg-gray-100 dark:bg-surface-dark border border-gray-200 dark:border-white/5 text-sm font-medium text-subtle-light dark:text-subtle-dark">
+          --:--
+        </div>
+        <button class="flex size-10 items-center justify-center rounded-full bg-gray-100 dark:bg-surface-dark text-text-light dark:text-text-dark hover:bg-gray-200 dark:hover:bg-white/10 transition-colors" onclick="document.documentElement.classList.toggle('dark')">
+          <span class="material-symbols-outlined dark:hidden">dark_mode</span>
+          <span class="material-symbols-outlined hidden dark:block">light_mode</span>
+        </button>
       </div>
-      <div>
-        <button id="start-btn">GO!</button>
+    </header>
+    <main class="flex flex-1 flex-col items-center justify-center px-4 py-8 md:px-10">
+      <div class="layout-content-container flex w-full max-w-[600px] flex-col gap-10">
+        <div class="flex justify-center">
+          <div class="flex h-12 items-center justify-center rounded-full bg-gray-200 dark:bg-surface-dark p-1 shadow-inner">
+            <label class="group flex cursor-pointer h-full items-center justify-center overflow-hidden rounded-full px-4 md:px-6 transition-all has-[:checked]:bg-white dark:has-[:checked]:bg-white/10 has-[:checked]:shadow-sm">
+              <span class="truncate text-sm font-medium text-subtle-light dark:text-subtle-dark group-has-[:checked]:text-text-light dark:group-has-[:checked]:text-white">Pomodoro</span>
+              <input checked="" class="invisible w-0" name="timer-mode" type="radio" value="Pomodoro" />
+            </label>
+            <label class="group flex cursor-pointer h-full items-center justify-center overflow-hidden rounded-full px-4 md:px-6 transition-all has-[:checked]:bg-white dark:has-[:checked]:bg-white/10 has-[:checked]:shadow-sm">
+              <span class="truncate text-sm font-medium text-subtle-light dark:text-subtle-dark group-has-[:checked]:text-text-light dark:group-has-[:checked]:text-white">Curto</span>
+              <input class="invisible w-0" name="timer-mode" type="radio" value="Descanso" />
+            </label>
+            <label class="group flex cursor-pointer h-full items-center justify-center overflow-hidden rounded-full px-4 md:px-6 transition-all has-[:checked]:bg-white dark:has-[:checked]:bg-white/10 has-[:checked]:shadow-sm">
+              <span class="truncate text-sm font-medium text-subtle-light dark:text-subtle-dark group-has-[:checked]:text-text-light dark:group-has-[:checked]:text-white">Longo</span>
+              <input class="invisible w-0" name="timer-mode" type="radio" value="Descanso Longo" />
+            </label>
+          </div>
+        </div>
+        <div class="flex flex-col items-center justify-center">
+          <div class="relative flex items-center justify-center rounded-full border-[8px] border-primary/20 p-12 md:p-20 shadow-[0_0_60px_-15px_rgba(249,245,6,0.3)]">
+            <div class="flex flex-col items-center">
+              <h1 id="timer-display" class="text-[6rem] md:text-[8rem] font-bold leading-none tracking-tighter text-text-light dark:text-white tabular-nums">
+                25:00
+              </h1>
+              <p id="timer-status" class="mt-2 text-lg font-medium text-subtle-light dark:text-subtle-dark uppercase tracking-widest">Foco Total</p>
+            </div>
+          </div>
+        </div>
+        <div class="flex justify-center">
+          <button id="action-btn" class="group relative flex h-16 w-full max-w-[240px] cursor-pointer items-center justify-center gap-3 overflow-hidden rounded-full bg-primary text-[#181811] shadow-[0_4px_20px_rgba(249,245,6,0.4)] transition-transform hover:scale-105 active:scale-95">
+            <span id="action-icon" class="material-symbols-outlined !text-[32px] transition-transform group-hover:rotate-12">play_arrow</span>
+            <span id="action-text" class="text-xl font-bold tracking-wide">INICIAR</span>
+          </button>
+        </div>
+        <div class="mt-8 rounded-xl bg-surface-light dark:bg-surface-dark border border-gray-200 dark:border-white/5 p-6 shadow-sm">
+          <div class="flex flex-col gap-6">
+
+            <div class="flex flex-col gap-4">
+              <div class="flex items-center justify-between">
+                <div>
+                  <h3 class="text-lg font-bold text-text-light dark:text-white">Tarefas</h3>
+                  <p class="text-sm text-subtle-light dark:text-subtle-dark">Gerencie seus objetivos com o pomodoro!</p>
+                </div>
+                <button id="add-task-btn" class="flex size-10 items-center justify-center rounded-full bg-gray-100 dark:bg-white/10 text-text-light dark:text-white hover:bg-primary hover:text-[#181811] transition-colors">
+                  <span class="material-symbols-outlined">add</span>
+                </button>
+              </div>
+              <input id="task-input" type="text" placeholder="Digite aqui sua tarefa!" class="w-full bg-gray-100 dark:bg-black/20 border-none rounded-lg p-3 text-text-light dark:text-white placeholder-subtle-light dark:placeholder-subtle-dark focus:ring-2 focus:ring-primary outline-none transition-all">
+            </div>
+            <ul id="task-list" class="flex flex-col gap-3">
+            </ul>
+          </div>
+        </div>
       </div>
-    </div>
-
-    <div>
-      <input type="text" name="tesk" id="task">
-      <button id="task-list">add task</button>
-    </div>
-
-  </main>
-  <script src="./script/app.js"></script>
+    </main>
+    <footer class="mt-auto border-t border-gray-200 dark:border-white/10 bg-white/50 dark:bg-black/20 py-6 text-center">
+      <p class="text-xs font-medium text-subtle-light dark:text-subtle-dark">
+        Desenvolvido por <span class="text-text-light dark:text-white hover:text-primary transition-colors cursor-pointer">@queirozzruandev</span>
+      </p>
+    </footer>
+  </div>
+  <script src="script/app.js"></script>
 </body>
 
 </html>
